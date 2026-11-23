@@ -4,6 +4,7 @@ import { FiSearch, FiX } from "react-icons/fi";
 import { useState } from "react";
 import products from "../hooks/dresses";
 import Civil from "../components/civil_dress";
+import { Link } from "react-router-dom";
 
 export default function Dresses() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -157,18 +158,17 @@ export default function Dresses() {
                     </h1>
 
                     <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                        
+
                         <div className="flex flex-wrap items-center justify-center gap-2">
                             {categories.map((cat) => (
                                 <button
                                     key={cat}
                                     type="button"
                                     onClick={() => setSelectedCategory(cat)}
-                                    className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                                        selectedCategory === cat
+                                    className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${selectedCategory === cat
                                             ? "bg-[#820102] text-[#F4B3B3] border border-[#F4B3B3]/40 shadow-lg shadow-[#820102]/50"
                                             : "bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 border border-white/10"
-                                    }`} >
+                                        }`} >
                                     {cat}
                                 </button>
                             ))}
@@ -273,11 +273,12 @@ export default function Dresses() {
             <div className="">
                 <div className="bg-[#F4B3B3] shadow-2xl py-20 text-center space-y-10">
                     <p className="text-4xl md:md:text-5xl text-center font-serif italic text-white">Your Moment Deserves something Beautiful</p>
-                    <button className="px-10 py-4 bg-[#820102] rounded-2xl text-black">Custom Order</button>
+
+                    <Link to="/contact"><button className="px-10 py-4 bg-[#820102] rounded-2xl text-black">Custom Order</button></Link>
                 </div>
             </div>
 
-            <Civil/>
+            <Civil />
         </div>
     );
 }

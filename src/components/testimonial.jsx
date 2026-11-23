@@ -47,8 +47,8 @@ const testimonials = [
 
 export default function Testimonials() {
     return (
-        <section className="relative overflow-hidden bg-[#F4E3E7]/70 py-24 lg:p-16">
-            <h1 className="text-5xl uppercase font-extrabold font-serif text-center pb-16 text-[#820102] px-5 italic">Testimonial</h1>
+        <section className="relative overflow-hidden bg-[#F4E3E7]/70 py-12 lg:p-16">
+            <h1 className="text-3xl md:text-5xl uppercase font-extrabold font-serif text-center pb-16 text-[#820102] px-5 italic">Testimonial</h1>
 
             <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
                 <p className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-[#820102]">
@@ -57,12 +57,12 @@ export default function Testimonials() {
                 <div className="mb-14 grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-6 px-3">
                     <div>
 
-                        <h2 className="max-w-xl font-serif text-3xl lg:text-4xl font-bold leading-tight text-[#820102]/50">
+                        <h2 className="max-w-xl font-serif text-3xl lg:text-4xl font-bold leading-tight text-[#820102]/50 text-shadow-2xs">
                             Worn with confidence. Remembered forever.
                         </h2>
                     </div>
 
-                    <p className="max-w-sm text-sm leading-7 text-black/50">
+                    <p className="max-w-sm text-sm leading-7 text-black/80">
                         Every Zelora piece becomes part of someone's story.
                         Here's what our clients have to say about their
                         experience with us.

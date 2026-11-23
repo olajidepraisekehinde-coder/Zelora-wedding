@@ -6,7 +6,9 @@ import img4 from "../assets/dressed/img4.jpg"
 import products from '../hooks/dresses'
 import { Link } from 'react-router-dom'
 import { FiArrowUpRight } from 'react-icons/fi'
+import UseTheme from '../hooks/useTheme'
 export default function About() {
+     const { darkMode } = UseTheme()
     return (
         <div>
             <div className='relative'>
@@ -47,10 +49,10 @@ export default function About() {
                     <div className='text-center space-y-2'>
 
                         <h1 className='text-5xl font-serif italic font-bold  text-center'>Zelora Story</h1>
-                        <p className="text-sm text-center text-gray-500">Zelora was born from a love for beautiful moments.</p>
+                        <p className="text-sm text-center text-white">Zelora was born from a love for beautiful moments.</p>
                     </div>
 
-                    <div className='max-w-2xl m-auto text-gray-800 space-y-4 text-lg py-8'>
+                    <div className={`max-w-2xl m-auto text-gray-800 space-y-4 text-md py-8 ${darkMode ? "text-white/80":"text-black"}`}>
 
 
                         <p className="">Zelora was created from a simple belief: what you wear should feel as meaningful as the moment itself.</p>

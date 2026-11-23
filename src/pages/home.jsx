@@ -1,4 +1,3 @@
-import React from 'react'
 import Hero from '../components/hero'
 import UseTheme from '../hooks/useTheme'
 import wed8 from "../assets/dressed/wed8.jpg"
@@ -7,6 +6,7 @@ import Craft from '../components/craft'
 import Testimonial from '../components/testimonial'
 import WhyUs from '../components/whyUs'
 import Card from '../components/card'
+import { Link } from 'react-router-dom'
 
 export default function Home() {
     const { darkMode } = UseTheme()
@@ -32,7 +32,7 @@ export default function Home() {
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3">
                             {products.slice(0, 8).map((item) => (
 
                                 <div
@@ -73,9 +73,9 @@ export default function Home() {
                                                 {item.price}
                                             </p>
 
-                                            <button className="text-xs uppercase tracking-wider text-white/50 hover:text-[#F4B3B3] transition">
+                                            <Link to="/dresses" className="text-xs uppercase tracking-wider text-white/50 hover:text-[#F4B3B3] transition">
                                                 Shop Now →
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -83,9 +83,11 @@ export default function Home() {
                         </div>
 
                         <div className="mt-14 text-center">
-                            <button className="border border-[#F4B3B3] px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#F4B3B3] transition duration-300 hover:bg-[#F4B3B3] hover:text-[#820102]">
-                                View All Collections
-                            </button>
+                            <Link to="/dresses">
+                                <button className="border border-[#F4B3B3] px-8 py-4 text-sm uppercase tracking-[0.2em] text-[#F4B3B3] transition duration-300 hover:bg-[#F4B3B3] hover:text-[#820102]">
+                                    View All Collections
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </section>
@@ -93,9 +95,9 @@ export default function Home() {
 
 
             <div>
-                <div className={`py-20 text-center ${darkMode ? 'dark-theme': "light-theme"}`}>
+                <div className={`py-20 text-center ${darkMode ? 'dark-theme' : "light-theme"}`}>
                     <h1 className="text-3xl md:text-5xl font-serif uppercase font-extrabold">ZELORA EXPERIENCE</h1>
-                    <p className={`py-5 text-sm md:text-xl italic ${darkMode ? "text-[#F4B3B3]":"text-[#820102]"}`}>More Than Clothing. A Moment Made Yours.</p>
+                    <p className={`py-5 text-sm md:text-xl italic ${darkMode ? "text-[#F4B3B3]" : "text-[#820102]"}`}>More Than Clothing. A Moment Made Yours.</p>
                 </div>
             </div>
 
@@ -126,10 +128,10 @@ export default function Home() {
                         className="w-full object-cover h-full rounded-2xl shadow-2xl hover:scale-105 transition duration-500 cursor-pointer"
                     />
                     <div className='text-center space-y-4'>
-                        <h1 className='text-3xl md:text-6xl italic font-bold'>Create your dream look</h1>
-                        <p className='max-w-md m-auto text-sm'>Tell us what you want and we will bring it to life</p>
+                        <h1 className='text-3xl md:text-5xl italic font-extrabold text-shadow-xs font-serif capitalize'>Create your dream look</h1>
+                        <p className='max-w-md m-auto text-sm font-bold'>Tell us what you want and we will bring it to life</p>
 
-                        <div className="text-black">
+                        <div className={`${darkMode ? "text-white" : "text-black"}`}>
                             <div className='flex gap-2 text-center justify-center py-2 text-sm italic font-bold'>
                                 <p className=''>Your Vision.</p>
                                 <p>Our Craft.</p>
@@ -147,8 +149,8 @@ export default function Home() {
                     </div>
                 </div>
                 <Craft />
-                <Testimonial/>
-                <WhyUs/>
+                <Testimonial />
+                <WhyUs />
                 <Card />
             </section>
         </>

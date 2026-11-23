@@ -155,17 +155,17 @@ export default function Civil() {
                     ))}
                 </div>
 
-               
+
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-                    
+
                     <div className="flex flex-wrap items-center justify-center gap-2">
                         {materialFilters.map((tab) => (
                             <button
                                 key={tab.value}
                                 onClick={() => setSelectedMaterial(tab.value)}
                                 className={`px-5 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 ${selectedMaterial === tab.value
-                                        ? "bg-[#820102] text-[#F4B3B3] shadow-lg shadow-[#820102]/50 border border-[#F4B3B3]/40"
-                                        : "bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 border border-white/5"
+                                    ? "bg-[#820102] text-[#F4B3B3] shadow-lg shadow-[#820102]/50 border border-[#F4B3B3]/40"
+                                    : "bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 border border-white/5"
                                     }`} >
                                 {tab.label}
                             </button>
@@ -228,7 +228,7 @@ export default function Civil() {
                                 <article
                                     key={dress.id}
                                     className="group relative flex flex-col rounded-3xl overflow-hidden bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 hover:border-[#F4B3B3]/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_45px_-12px_rgba(130,1,2,0.45)]"  >
-                                     
+
                                     <div className="relative h-[420px] sm:h-[400px] lg:h-[430px] w-full overflow-hidden bg-black/40">
                                         <img
                                             src={dress.image}
@@ -238,18 +238,18 @@ export default function Civil() {
 
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0d0204] via-black/20 to-black/30 pointer-events-none" />
 
-                                        
+
                                         <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                                            
+
                                             <span className="rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-[#F4B3B3] border border-white/10">
                                                 {dress.material}
-                                            </span>                                          
+                                            </span>
                                             <button
                                                 onClick={(e) => toggleFavorite(e, dress.id, dress.name)}
                                                 aria-label="Save to Wishlist"
                                                 className={`w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md border transition-all duration-300 ${isFavorite
-                                                        ? "bg-[#820102] text-[#F4B3B3] border-[#F4B3B3]/50 scale-110"
-                                                        : "bg-black/50 text-white/80 hover:text-white border-white/15 hover:bg-black/80"
+                                                    ? "bg-[#820102] text-[#F4B3B3] border-[#F4B3B3]/50 scale-110"
+                                                    : "bg-black/50 text-white/80 hover:text-white border-white/15 hover:bg-black/80"
                                                     }`} >
                                                 {isFavorite ? (
                                                     <BsHeartFill className="text-sm" />
@@ -258,9 +258,9 @@ export default function Civil() {
                                                 )}
                                             </button>
                                         </div>
-                        
+
                                         <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between z-10">
-                                           
+
                                             <span className="inline-flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-md px-2.5 py-1 text-[10px] text-gray-200 border border-white/10">
                                                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                                                 {dress.availability || "In Stock"}
@@ -275,10 +275,10 @@ export default function Civil() {
                                         </div>
                                     </div>
 
-                                   
+
                                     <div className="p-6 flex flex-col justify-between flex-grow bg-black/70 backdrop-blur-md space-y-4">
                                         <div>
-                                            
+
                                             <div className="flex items-center justify-between text-[11px] tracking-wider uppercase text-gray-400 mb-2">
                                                 <span className="inline-flex items-center gap-1.5">
                                                     <span
@@ -289,19 +289,19 @@ export default function Civil() {
                                                 </span>
                                                 <span>Civil Registry</span>
                                             </div>
-                                           
+
                                             <h2
                                                 onClick={() => setQuickViewDress(dress)}
                                                 className="font-serif text-xl font-bold text-white hover:text-[#F4B3B3] transition-colors cursor-pointer line-clamp-1" >
                                                 {dress.name}
                                             </h2>
 
-                                           
+
                                             <p className="mt-1.5 text-xs text-gray-400 line-clamp-2 leading-relaxed">
                                                 {dress.description}
                                             </p>
                                         </div>
-                                        
+
                                         <div className="flex items-center gap-1.5 pt-1">
                                             <span className="text-[10px] uppercase tracking-wider text-gray-400 mr-1">
                                                 Sizes:
@@ -317,7 +317,7 @@ export default function Civil() {
                                                 ))}
                                         </div>
 
-                                   
+
                                         <div className="pt-3 border-t border-white/10 flex items-center justify-between">
                                             <div>
                                                 <span className="text-[10px] uppercase tracking-widest text-gray-400 block">
@@ -342,7 +342,7 @@ export default function Civil() {
                     </div>
                 )}
 
-               
+
                 <div className="mt-20 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#820102]/60 via-[#520102]/80 to-[#140306] border border-[#F4B3B3]/30 p-8 sm:p-12 text-center md:text-left backdrop-blur-xl">
                     <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-1/2 bg-radial from-[#F4B3B3]/10 to-transparent blur-3xl" />
 
@@ -373,21 +373,14 @@ export default function Civil() {
                 </div>
             </div>
 
-            
+
             {quickViewDress && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+                    className="fixed inset-0 z-50 flex items-center justify-center p-2 bg-black/80 backdrop-blur-md animate-fadeIn"
                     onClick={() => setQuickViewDress(null)}>
                     <div
                         className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-[#140407] border border-[#F4B3B3]/40 shadow-2xl text-[#F4B3B3] animate-scaleUp"
                         onClick={(e) => e.stopPropagation()} >
-                       
-                        <button
-                            onClick={() => setQuickViewDress(null)}
-                            aria-label="Close dialog"
-                            className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 border border-white/20 text-white hover:text-[#F4B3B3] hover:bg-black flex items-center justify-center transition" >
-                            <FiX size={18} />
-                        </button>
 
                         <div className="grid grid-cols-1 md:grid-cols-2">
                             <div className="relative h-72 md:h-[500px] w-full bg-black">
@@ -401,13 +394,21 @@ export default function Civil() {
 
                             <div className="p-6 sm:p-8 flex flex-col justify-between space-y-5 overflow-y-auto max-h-[500px]">
                                 <div>
-                                    <div className="flex items-center gap-2 mb-2">
+                                    <div className="relative flex items-center gap-2 mb-2">
                                         <span className="rounded-full bg-[#820102]/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#F4B3B3] border border-[#F4B3B3]/30">
                                             {quickViewDress.category || "Civil Collection"}
                                         </span>
                                         <span className="text-xs text-gray-400">
                                             • {quickViewDress.availability}
                                         </span>
+
+
+                                        <button
+                                            onClick={() => setQuickViewDress(null)}
+                                            aria-label="Close dialog"
+                                            className="absolute -top-2 right-0 z-20 w-10 h-10 rounded-full bg-black/60 border border-white/20 text-white hover:text-[#F4B3B3] hover:bg-black flex items-center justify-center transition" >
+                                            <FiX size={18} />
+                                        </button>
                                     </div>
 
                                     <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">
@@ -467,7 +468,7 @@ export default function Civil() {
                                         </div>
                                     </div>
                                 </div>
-                              
+
                                 <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row gap-3">
                                     <Link
                                         to="/contact"
@@ -486,8 +487,8 @@ export default function Civil() {
                                             );
                                         }}
                                         className={`px-4 py-3.5 rounded-full border text-xs flex items-center justify-center transition ${favorites.includes(quickViewDress.id)
-                                                ? "bg-[#820102] text-[#F4B3B3] border-[#F4B3B3]/50"
-                                                : "border-white/20 text-white hover:bg-white/10"
+                                            ? "bg-[#820102] text-[#F4B3B3] border-[#F4B3B3]/50"
+                                            : "border-white/20 text-white hover:bg-white/10"
                                             }`} >
                                         {favorites.includes(quickViewDress.id) ? (
                                             <BsHeartFill className="text-sm text-[#F4B3B3]" />

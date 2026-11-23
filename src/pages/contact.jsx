@@ -4,6 +4,8 @@ import UseTheme from "../hooks/useTheme";
 import { FiUser, FiMail, FiPhone, FiClock, FiMapPin, FiCheck, FiArrowUpRight } from "react-icons/fi";
 import { BsWhatsapp, BsShieldCheck } from "react-icons/bs";
 import wed16 from "../assets/dressed/wed16.jpg";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function Contact() {
     const { darkMode } = UseTheme();
@@ -22,6 +24,18 @@ export default function Contact() {
         notes: "",
     });
 
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    }
+
+    const [success, setSuccess] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [toastMessage, setToastMessage] = useState(null);
 
@@ -41,13 +55,64 @@ export default function Contact() {
         }, 4500);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitted(true);
-        triggerToast(
-            `Thank you, ${formData.name || "valued client"}! Your consultation request for "${formData.service}" has been received. Our lead stylist will reach out within 24 hours.`
-        );
+        setLoading(true)
+        setErrorMessage("")
+        setSuccess("")
+
+        try {
+            const response = await fetch(
+                "https://formspree.io/f/moedpapz",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                }
+            );
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setSuccess("Message sent successfully!");
+
+                setIsSubmitted(true);
+
+                setFormData({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    service: initialService,
+                    eventDate: "",
+                    consultationType: "In-Person (Lagos Atelier)",
+                    notes: "",
+                });
+
+                triggerToast(
+                    `Thank you, ${formData.name}! Your consultation request has been received.`
+                );
+
+            } else {
+                console.log(result);
+                setErrorMessage(
+                    result.errors?.map((err) => err.message).join(", ") ||
+                    "Unable to send your message. Please try again."
+                );
+            }
+
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Network error. Please try again.");
+
+        } finally {
+            setLoading(false);
+        }
     };
+
+
 
     const handleReset = () => {
         setIsSubmitted(false);
@@ -173,6 +238,7 @@ export default function Contact() {
                             ? "bg-gradient-to-b from-white/[0.05] to-white/[0.01] border-white/10 shadow-2xl backdrop-blur-md"
                             : "bg-white border-[#820102]/15 shadow-xl"
                             }`} >
+
                         {isSubmitted ? (
                             <div className="text-center py-16 space-y-5">
                                 <div className="w-16 h-16 rounded-full bg-[#820102] text-[#F4B3B3] flex items-center justify-center mx-auto text-2xl shadow-xl">
@@ -190,12 +256,14 @@ export default function Contact() {
                                     will review your vision and contact you via WhatsApp or Email
                                     within 24 hours to schedule your private fitting.
                                 </p>
+
                                 <div className="pt-4 flex items-center justify-center gap-4">
                                     <button
                                         onClick={handleReset}
                                         className="rounded-full bg-[#820102] px-6 py-3 text-xs font-semibold uppercase tracking-wider text-[#F4B3B3] hover:bg-[#520102] transition shadow-md" >
                                         Submit Another Request
                                     </button>
+
                                     <Link
                                         to="/dresses"
                                         className={`rounded-full border px-6 py-3 text-xs font-semibold uppercase tracking-wider transition ${darkMode
@@ -204,7 +272,15 @@ export default function Contact() {
                                             }`} >
                                         View Collections
                                     </Link>
+
                                 </div>
+                                    {success && (
+                                        <div className="mt-4 rounded-lg border border-green-500/40 bg-green-500/10 px-4 py-3 md:col-span-2">
+                                            <p className="text-green-400 text-sm text-center">
+                                                {success}
+                                            </p>
+                                        </div>
+                                    )}
                             </div>
                         ) : (
                             <div>
@@ -228,6 +304,14 @@ export default function Contact() {
                                         couturiers can prepare tailored sketches and swatches for your
                                         fitting.
                                     </p>
+
+                                     {errorMessage && (
+                                        <div className="w-full mt-4 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 md:col-span-2">
+                                            <p className="text-red-400 text-sm text-center">
+                                                {errorMessage}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -244,10 +328,9 @@ export default function Contact() {
                                                     type="text"
                                                     required
                                                     placeholder="e.g. Amara Okoye"
+                                                    name="name"
                                                     value={formData.name}
-                                                    onChange={(e) =>
-                                                        setFormData({ ...formData, name: e.target.value })
-                                                    }
+                                                    onChange={handleChange}
                                                     className={`w-full rounded-2xl py-3 pl-10 pr-4 text-xs focus:outline-none transition-all ${darkMode
                                                         ? "bg-black/50 border border-white/20 text-white placeholder-gray-500 focus:border-[#F4B3B3]"
                                                         : "bg-[#fbf4f5] border border-gray-300 text-[#520102] placeholder-gray-400 focus:border-[#820102]"
@@ -268,10 +351,9 @@ export default function Contact() {
                                                     type="email"
                                                     required
                                                     placeholder="amara@example.com"
+                                                    name="email"
                                                     value={formData.email}
-                                                    onChange={(e) =>
-                                                        setFormData({ ...formData, email: e.target.value })
-                                                    }
+                                                    onChange={handleChange}
                                                     className={`w-full rounded-2xl py-3 pl-10 pr-4 text-xs focus:outline-none transition-all ${darkMode
                                                         ? "bg-black/50 border border-white/20 text-white placeholder-gray-500 focus:border-[#F4B3B3]"
                                                         : "bg-[#fbf4f5] border border-gray-300 text-[#520102] placeholder-gray-400 focus:border-[#820102]"
@@ -294,10 +376,9 @@ export default function Contact() {
                                                     type="tel"
                                                     required
                                                     placeholder="+234 800 000 0000"
+                                                    name="phone"
                                                     value={formData.phone}
-                                                    onChange={(e) =>
-                                                        setFormData({ ...formData, phone: e.target.value })
-                                                    }
+                                                    onChange={handleChange}
                                                     className={`w-full rounded-2xl py-3 pl-10 pr-4 text-xs focus:outline-none transition-all ${darkMode
                                                         ? "bg-black/50 border border-white/20 text-white placeholder-gray-500 focus:border-[#F4B3B3]"
                                                         : "bg-[#fbf4f5] border border-gray-300 text-[#520102] placeholder-gray-400 focus:border-[#820102]"
@@ -314,10 +395,10 @@ export default function Contact() {
                                                 Bespoke Service Desired
                                             </label>
                                             <select
+                                                name="service"
                                                 value={formData.service}
-                                                onChange={(e) =>
-                                                    setFormData({ ...formData, service: e.target.value })
-                                                }
+                                                onChange={handleChange}
+
                                                 className={`w-full rounded-2xl py-3 px-4 text-xs focus:outline-none transition-all ${darkMode
                                                     ? "bg-[#160407] border border-white/20 text-white focus:border-[#F4B3B3]"
                                                     : "bg-[#fbf4f5] border border-gray-300 text-[#520102] focus:border-[#820102]"
@@ -341,14 +422,13 @@ export default function Contact() {
                                                     }`} >
                                                 Target Wedding / Event Date
                                             </label>
+
                                             <div className="relative">
                                                 <input
                                                     type="date"
+                                                    name="eventDate"
                                                     value={formData.eventDate}
-                                                    onChange={(e) => setFormData({
-                                                        ...formData, eventDate: e.target.value,
-                                                    })
-                                                    }
+                                                    onChange={handleChange}
                                                     className={`w-full rounded-2xl py-3 px-4 text-xs focus:outline-none transition-all ${darkMode
                                                         ? "bg-black/50 border border-white/20 text-white focus:border-[#F4B3B3]"
                                                         : "bg-[#fbf4f5] border border-gray-300 text-[#520102] focus:border-[#820102]"
@@ -364,13 +444,9 @@ export default function Contact() {
                                                 Consultation Format
                                             </label>
                                             <select
+                                                name="consultationType"
                                                 value={formData.consultationType}
-                                                onChange={(e) =>
-                                                    setFormData({
-                                                        ...formData,
-                                                        consultationType: e.target.value,
-                                                    })
-                                                }
+                                                onChange={handleChange}
                                                 className={`w-full rounded-2xl py-3 px-4 text-xs focus:outline-none transition-all ${darkMode
                                                     ? "bg-[#160407] border border-white/20 text-white focus:border-[#F4B3B3]"
                                                     : "bg-[#fbf4f5] border border-gray-300 text-[#520102] focus:border-[#820102]"
@@ -380,6 +456,7 @@ export default function Contact() {
                                                     className={darkMode ? "bg-[#140407]" : "bg-white"} >
                                                     In-Person (Lagos Showroom)
                                                 </option>
+
                                                 <option
                                                     value="Virtual Consultation (Worldwide)"
                                                     className={darkMode ? "bg-[#140407]" : "bg-white"} >
@@ -395,13 +472,13 @@ export default function Contact() {
                                                 }`} >
                                             Your Vision & Silhouette Ideas
                                         </label>
+
                                         <textarea
                                             rows="3"
                                             placeholder="Share details about your dream silhouette, lace preferences, color palette, or venue location..."
+                                            name="notes"
                                             value={formData.notes}
-                                            onChange={(e) =>
-                                                setFormData({ ...formData, notes: e.target.value })
-                                            }
+                                            onChange={handleChange}
                                             className={`w-full rounded-2xl p-4 text-xs focus:outline-none transition-all ${darkMode
                                                 ? "bg-black/50 border border-white/20 text-white placeholder-gray-500 focus:border-[#F4B3B3]"
                                                 : "bg-[#fbf4f5] border border-gray-300 text-[#520102] placeholder-gray-400 focus:border-[#820102]"
@@ -409,14 +486,32 @@ export default function Contact() {
                                         />
                                     </div>
 
-                                    <div className="pt-3">
+                                    <div className="md:col-span-2 m-auto md:m-0">
+                                        <button
+                                            type="submit"
+                                            disabled={loading}
+                                            className="flex items-center justify-center gap-2 rounded-full bg-[#85A9FF] px-8 py-3 font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60">
+                                            {loading ? (
+                                                <>
+                                                    <AiOutlineLoading3Quarters className="animate-spin" />
+                                                    Sending...
+                                                </>
+                                            ) : (
+                                                "Reserve Consultation"
+                                            )}
+                                            <FaLongArrowAltLeft
+                                                className="flex items-center text-2xl" />
+                                        </button>
+                                    </div>
+
+                                    {/* <div className="pt-3">
                                         <button
                                             type="submit"
                                             className="group w-full rounded-full bg-[#820102] py-4 text-xs font-bold uppercase tracking-[0.2em] text-[#F4B3B3] hover:bg-[#520102] transition-all duration-300 shadow-xl flex items-center justify-center gap-2 cursor-pointer" >
                                             <span>Reserve Consultation</span>
                                             <FiArrowUpRight className="text-sm transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                                         </button>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
                         )}
@@ -476,7 +571,7 @@ export default function Contact() {
                                     rel="noopener noreferrer"
                                     className="w-full inline-flex items-center justify-center gap-3 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white py-3.5 px-6 text-xs font-bold uppercase tracking-wider transition shadow-lg" >
                                     <BsWhatsapp className="text-base" />
-                                    <span>Instant WhatsApp Concierge</span>
+                                    <span>Instant WhatsApp Message</span>
                                 </a>
                             </div>
                         </div>
